@@ -5,31 +5,46 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+import RedBookTabBar from '@/components/RedBookTabBar';
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+        screenOptions={{
+          headerShown: false,
+        }}
+        tabBar={(props)=><RedBookTabBar {...props}></RedBookTabBar>}
+      >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
+          title: '首页'
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="shope"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
+          title: '购物'
+        }}
+      />
+      <Tabs.Screen
+          name='publish'
+          options={{
+            href: null,
+          }}
+      />
+      <Tabs.Screen
+        name="message"
+        options={{
+          title: '消息'
+        }}
+      />
+      <Tabs.Screen
+        name="mine"
+        options={{
+          title: '我的'
         }}
       />
     </Tabs>
