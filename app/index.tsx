@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Image,
@@ -8,10 +8,12 @@ import {
   Linking,
   TextInput,
   LayoutAnimation,
+  ToastAndroid,
 } from 'react-native'
-
-import {  useRouter } from 'expo-router';
-
+import Toast from "@/components/widget/Toast";
+import Loading from "@/components/widget/Loading";
+import { useRouter } from 'expo-router';
+import request from "@/utils/request";
 import { formatPhone, replaceBlank } from '@/utils/util';
 import icon_logo_main from '@/assets/images/login/icon_main_logo.png';
 import icon_unselected from '@/assets/images/login/icon_unselected.png';
@@ -25,6 +27,8 @@ import icon_exchange from '@/assets/images/login/icon_exchange.png';
 import icon_wx from '@/assets/images/login/icon_wx.png';
 import icon_qq from '@/assets/images/login/icon_qq.webp';
 import icon_close_modal from '@/assets/images/login/icon_close_modal.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Index() {
   const [loginType, setLoginType] = useState<'quick' | 'input'>('quick');
@@ -32,12 +36,38 @@ export default function Index() {
   const [eyeOpen, setEyeOpen] = useState<boolean>(true);
   const [phone, setPhone] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
-  const [canLogin,setCanLogin] = useState<boolean>(false)
+  const [canLogin, setCanLogin] = useState<boolean>(false)
+  const [loading,setLoading] = useState<boolean>(false)
+  const router = useRouter();
   // 登录
-  const onLoginPress = () =>{}
+  const onLoginPress = async () => {
+    const canLogin = phone?.length === 13 && pwd?.length === 6;
+    if (!check || !canLogin) {
+      ToastAndroid.show('未勾选同意《用户协议》和《隐私政策》',ToastAndroid.SHORT)
+      return
+    }
+    if(loading) return
+    setLoading(true)
+    try {
+      const data = await request.post('api/auth/login', {
+        data:{
+          username: replaceBlank(phone),
+          password: pwd,
+        }
+      })
+      await AsyncStorage.setItem('userinfo', JSON.stringify(data));
+      router.replace('/(tabs)/home')
+    } catch (error:any) {
+      ToastAndroid.show(error.message || '未知错误',ToastAndroid.SHORT)
+    }
+    setLoading(false)
+  }
+  useEffect(()=>{
+    setCanLogin(phone?.length === 13 && pwd?.length === 6)
+  },[phone,pwd])
   // 快捷登录方式
   const renderQuickLogin = () => {
-    const router = useRouter();
+
 
     const styles = StyleSheet.create({
       root: {
@@ -153,7 +183,7 @@ export default function Index() {
         <TouchableOpacity
           style={styles.oneKeyLoginButton}
           activeOpacity={0.7}
-          onPress={()=>{
+          onPress={() => {
             router.push('/(tabs)/home')
           }}
         >
@@ -171,7 +201,7 @@ export default function Index() {
         height: '100%',
         flexDirection: 'column',
         alignItems: 'center',
-        paddingTop:68,
+        paddingTop: 68,
         paddingHorizontal: 48,
       },
       pwdLogin: {

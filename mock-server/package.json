@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nitro build",
+    "dev": "nitro dev --host",
+    "prepare": "nitro prepare",
+    "preview": "node .output/server/index.mjs"
+  },
+  "devDependencies": {
+    "nitropack": "latest"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.3",
+    "h3": "^1.13.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

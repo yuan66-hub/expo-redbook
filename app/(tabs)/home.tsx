@@ -12,7 +12,7 @@ import Footer from '@/components/home/Footer';
 import TitleBar from '@/components/home/TitleBar';
 import { useState } from 'react';
 import ArticleItem from '@/components/home/ArticleItem';
-
+import request from '@/utils/request';
 import { DEFAULT_CATEGORY_LIST } from '@/data/category'
 
 export default function Home() {
