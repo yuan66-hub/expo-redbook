@@ -3,9 +3,9 @@ import {
     StyleSheet,
 } from 'react-native'
 
-export default  function Footer() {
+export default  function Footer({ finish }:{ finish:boolean }) {
     return (
-        <Text style={styles.footerTxt}>没有更多数据</Text>
+        <Text style={styles.footerTxt}>{ finish?'没有更多数据':'加载中...' }</Text>
     );
 }
 

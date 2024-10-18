@@ -14,10 +14,12 @@ interface IProps {
 }
 
 import icon_arrow from '@/assets/images/home/icon_arrow.png'
+import CategoryModal from './CategoryModal';
 
 export default function CategoryList({ categoryList, onCategoryChange }: IProps) {
     const [category,setCategory] = useState<Category>()
     const scrollViewRef = useRef<any>(null)
+    const modalRef = useRef<any>(null)
     const onCategoryPress = (item:Category,index:number) =>{
         setCategory(item)
         onCategoryChange?.(item)
@@ -26,6 +28,7 @@ export default function CategoryList({ categoryList, onCategoryChange }: IProps)
         })
     }
     return (
+       <>
         <View style={styles.container}>
             <ScrollView
                 style={styles.scrollView}
@@ -50,11 +53,14 @@ export default function CategoryList({ categoryList, onCategoryChange }: IProps)
                 style={styles.openButton}
                 onPress={() => {
                   // 打开抽屉    
+                  modalRef.current?.show()
                 }}
             >
                 <Image style={styles.openImg} source={icon_arrow} />
             </TouchableOpacity>
         </View>
+        <CategoryModal ref={modalRef} categoryList={categoryList}></CategoryModal>
+       </>
     )
 }
 

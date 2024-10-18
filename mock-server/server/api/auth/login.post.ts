@@ -34,7 +34,6 @@ export default defineEventHandler(async (event) => {
 
     return useResponseSuccess({
         ...findUser,
-        avatar: `${host}${findUser.avatar}`,
         accessToken,
     });
 });

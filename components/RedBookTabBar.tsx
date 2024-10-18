@@ -47,7 +47,7 @@ export default function RedBookTabBar(props: any) {
     if (!result.canceled) {
       console.log(result);
     } else {
-      alert('You did not select any image.');
+     
     }
   };
   return (

@@ -11,15 +11,16 @@ export default function ArticleItem({ item, index }: IProps) {
     const onArticlePress = (item:ArticleSimple) =>{
         return () =>{}
     }
+    const host = 'http://192.168.4.6:3000/'
     return (
         <TouchableOpacity
             style={styles.item}
             onPress={onArticlePress(item)}
         >
-            <ResizeImage uri={item.image} />
+            <ResizeImage uri={`${host}${item.images[0]}`} />
             <Text style={styles.titleTxt}>{item.title}</Text>
             <View style={styles.nameLayout}>
-                <Image style={styles.avatarImg} source={{ uri: item.avatarUrl }} />
+                <Image style={styles.avatarImg} source={{ uri: `${host}${item.avatarUrl}` }} />
                 <Text style={styles.nameTxt}>{item.userName}</Text>
                 <Heart
                     value={item.isFavorite}

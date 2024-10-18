@@ -1,11 +1,15 @@
-
-
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { HOST } from "./const";
 
 
 const stringify = (params: any) => {
-    const strs = []
-    for (const [key, value] of params) {
-        strs.push(`${key}=${value}`)
+    const strs: any[] = []
+    for (const key in params) {
+        if (Object.prototype.hasOwnProperty.call(params, key)) {
+            const val = params[key];
+            strs.push(`${key}=${val}`)
+
+        }
     }
     return strs.join('&')
 }
@@ -25,11 +29,15 @@ class Request {
     /**
      * 请求拦截器
      */
-    interceptorsRequest({ url, method, params, headers = {} }: IRequestBody) {
+    async interceptorsRequest({ url, method, params, headers = {} }: IRequestBody) {
         let queryParams = ''; //url参数
         let requestPayload = ''; //请求体数据
         const config = {}
-
+        const userInfo: string = await AsyncStorage.getItem('userinfo') as string
+        const { accessToken } = JSON.parse(userInfo) || {}
+        if (accessToken) {
+            headers = Object.assign(headers, { 'Authorization': `Bearer ${accessToken}` });
+        }
         if (method === 'GET' || method === 'DELETE') {
             //fetch对GET请求等，不支持将参数传在body上，只能拼接url
             if (params) {
@@ -82,9 +90,9 @@ class Request {
 
     async httpFactory({ url = '', params = {}, method }: IRequestBody) {
         // https://github.com/expo/expo/issues/16451
-        const host = 'http://192.168.4.6:3000/'
-        const req = this.interceptorsRequest({
-            url: host + url,
+        const host = HOST
+        const req = await this.interceptorsRequest({
+            url: host + '/' + url,
             method,
             params: params.data,
             headers: params.headers || {}

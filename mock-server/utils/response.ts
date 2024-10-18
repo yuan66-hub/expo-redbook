@@ -15,12 +15,13 @@ export function usePageResponseSuccess<T = any>(
     list: T[],
     { message = 'ok' } = {},
 ) {
+
+
     const pageData = pagination(
         Number.parseInt(`${page}`),
         Number.parseInt(`${pageSize}`),
         list,
     );
-
     return {
         ...useResponseSuccess({
             items: pageData,
@@ -59,6 +60,8 @@ export function pagination<T = any>(
     array: T[],
 ): T[] {
     const offset = (pageNo - 1) * Number(pageSize);
+
+
     return offset + Number(pageSize) >= array.length
         ? array.slice(offset)
         : array.slice(offset, offset + Number(pageSize));

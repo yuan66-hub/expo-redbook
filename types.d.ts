@@ -13,4 +13,35 @@ type ArticleSimple = {
     favoriteCount: number;
     isFavorite: boolean;
     image: string;
+    images: string[]
+}
+
+type GoodsCategory = {
+    id: number;
+    name: string;
+    image: string;
+}
+
+type GoodsSimple = {
+    id: number;
+    title: string;
+    image: string;
+    price: number;
+    originPrice: number | undefined;
+    promotion: string | undefined;
+}
+
+
+type UnRead = {
+    unreadFavorate: number,
+    newFollow: number,
+    comment: number,
+};
+
+type MessageListItem = {
+    id: number;
+    name: lastMessage;
+    avatarUrl: string;
+    lastMessage?: string;
+    lastMessageTime?: string;
 }

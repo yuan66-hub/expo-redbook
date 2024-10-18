@@ -45,7 +45,9 @@ export default function Heart({ value, size = 20, onValueChanged }: IProps) {
                 delay: 200,
             });
 
-            Animated.parallel([scaleAnim, alphaAnim]).start();
+            Animated.parallel([scaleAnim, alphaAnim], {
+                stopTogether: true, // 禁止其中一个动画停止,所有动画都停止
+              }).start();
         }else {
             // 重置
             scale.setValue(0);
@@ -57,7 +59,7 @@ export default function Heart({ value, size = 20, onValueChanged }: IProps) {
             onPress={onHeartPress}
         >
             <Image
-                style={[styles.container, { width: size, height: size }]}
+                style={[styles.container, { width: size , height: size  }]}
                 source={showState ? icon_heart : icon_heart_empty}
             />
             <Animated.View style={{
