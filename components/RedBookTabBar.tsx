@@ -1,13 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native'
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import icon_tab_publish from '@/assets/images/tabbar/icon_tab_publish.png';
-
 
 const styles = StyleSheet.create({
   root: {
@@ -32,10 +25,10 @@ const styles = StyleSheet.create({
     height: 42,
     resizeMode: 'contain',
   },
-})
+});
 
 export default function RedBookTabBar(props: any) {
-  const { state, descriptors, navigation } = props
+  const { state, descriptors, navigation } = props;
   const { routes, index } = state;
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -47,7 +40,6 @@ export default function RedBookTabBar(props: any) {
     if (!result.canceled) {
       console.log(result);
     } else {
-     
     }
   };
   return (
@@ -58,14 +50,17 @@ export default function RedBookTabBar(props: any) {
         const isFocused = index === i;
         if (i === 2) {
           return (
-              <TouchableOpacity
-                  key={route.key}
-                  style={styles.tabItem}
-                  onPress={pickImageAsync}
-              >
-                  <Image style={styles.icon_tab_publish} source={icon_tab_publish} />
-              </TouchableOpacity>
-          )
+            <TouchableOpacity
+              key={route.key}
+              style={styles.tabItem}
+              onPress={pickImageAsync}
+            >
+              <Image
+                style={styles.icon_tab_publish}
+                source={icon_tab_publish}
+              />
+            </TouchableOpacity>
+          );
         }
         return (
           <TouchableOpacity
@@ -75,16 +70,18 @@ export default function RedBookTabBar(props: any) {
               navigation.navigate(route.name);
             }}
           >
-            <Text style={{
-              fontSize: isFocused ? 18 : 16,
-              color: isFocused ? '#333' : '#999',
-              fontWeight: isFocused ? 'bold' : 'normal'
-            }}>
+            <Text
+              style={{
+                fontSize: isFocused ? 18 : 16,
+                color: isFocused ? '#333' : '#999',
+                fontWeight: isFocused ? 'bold' : 'normal',
+              }}
+            >
               {label}
             </Text>
           </TouchableOpacity>
-        )
+        );
       })}
     </View>
-  )
+  );
 }

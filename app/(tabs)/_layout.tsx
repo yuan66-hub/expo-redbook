@@ -12,39 +12,39 @@ export default function TabLayout() {
 
   return (
     <Tabs
-        screenOptions={{
-          headerShown: false,
-        }}
-        tabBar={(props)=><RedBookTabBar {...props}></RedBookTabBar>}
-      >
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={(props) => <RedBookTabBar {...props}></RedBookTabBar>}
+    >
       <Tabs.Screen
         name="home"
         options={{
-          title: '首页'
+          title: '首页',
         }}
       />
       <Tabs.Screen
         name="shope"
         options={{
-          title: '购物'
+          title: '购物',
         }}
       />
       <Tabs.Screen
-          name='publish'
-          options={{
-            href: null,
-          }}
+        name="publish"
+        options={{
+          href: null,
+        }}
       />
       <Tabs.Screen
         name="message"
         options={{
-          title: '消息'
+          title: '消息',
         }}
       />
       <Tabs.Screen
         name="mine"
         options={{
-          title: '我的'
+          title: '我的',
         }}
       />
     </Tabs>

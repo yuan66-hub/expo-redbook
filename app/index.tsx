@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Image,
@@ -9,11 +9,10 @@ import {
   TextInput,
   LayoutAnimation,
   ToastAndroid,
-} from 'react-native'
-import Toast from "@/components/widget/Toast";
-import Loading from "@/components/widget/Loading";
+} from 'react-native';
+
 import { useRouter } from 'expo-router';
-import request from "@/utils/request";
+import request from '@/utils/request';
 import { formatPhone, replaceBlank } from '@/utils/util';
 import icon_logo_main from '@/assets/images/login/icon_main_logo.png';
 import icon_unselected from '@/assets/images/login/icon_unselected.png';
@@ -29,46 +28,46 @@ import icon_qq from '@/assets/images/login/icon_qq.webp';
 import icon_close_modal from '@/assets/images/login/icon_close_modal.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 export default function Index() {
   const [loginType, setLoginType] = useState<'quick' | 'input'>('quick');
   const [check, setCheck] = useState<boolean>(false);
   const [eyeOpen, setEyeOpen] = useState<boolean>(true);
   const [phone, setPhone] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
-  const [canLogin, setCanLogin] = useState<boolean>(false)
-  const [loading,setLoading] = useState<boolean>(false)
+  const [canLogin, setCanLogin] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   // 登录
   const onLoginPress = async () => {
     const canLogin = phone?.length === 13 && pwd?.length === 6;
     if (!check || !canLogin) {
-      ToastAndroid.show('未勾选同意《用户协议》和《隐私政策》',ToastAndroid.SHORT)
-      return
+      ToastAndroid.show(
+        '未勾选同意《用户协议》和《隐私政策》',
+        ToastAndroid.SHORT,
+      );
+      return;
     }
-    if(loading) return
-    setLoading(true)
+    if (loading) return;
+    setLoading(true);
     try {
       const data = await request.post('api/auth/login', {
-        data:{
+        data: {
           username: replaceBlank(phone),
           password: pwd,
-        }
-      })
+        },
+      });
       await AsyncStorage.setItem('userinfo', JSON.stringify(data));
-      router.replace('/(tabs)/home')
-    } catch (error:any) {
-      ToastAndroid.show(error.message || '未知错误',ToastAndroid.SHORT)
+      router.replace('/(tabs)/home');
+    } catch (error: any) {
+      ToastAndroid.show(error.message || '未知错误', ToastAndroid.SHORT);
     }
-    setLoading(false)
-  }
-  useEffect(()=>{
-    setCanLogin(phone?.length === 13 && pwd?.length === 6)
-  },[phone,pwd])
+    setLoading(false);
+  };
+  useEffect(() => {
+    setCanLogin(phone?.length === 13 && pwd?.length === 6);
+  }, [phone, pwd]);
   // 快捷登录方式
   const renderQuickLogin = () => {
-
-
     const styles = StyleSheet.create({
       root: {
         width: '100%',
@@ -86,14 +85,14 @@ export default function Index() {
       },
       otherLoginTxt: {
         fontSize: 16,
-        color: '#303080'
+        color: '#303080',
       },
       icon_arrow: {
         width: 16,
         height: 16,
         resizeMode: 'contain',
         marginLeft: 6,
-        transform: [{ rotate: '180deg', }]
+        transform: [{ rotate: '180deg' }],
       },
       wxLoginButton: {
         width: '100%',
@@ -149,15 +148,16 @@ export default function Index() {
               style={allStyles.radioButton}
               source={check ? icon_selected : icon_unselected}
             />
-
           </TouchableOpacity>
           <Text style={allStyles.lableTxt}>我已阅读并同意</Text>
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL('https://www.baidu.com')
+              Linking.openURL('https://www.baidu.com');
             }}
           >
-            <Text style={allStyles.protocolTxt}>《用户协议》和《隐私政策》</Text>
+            <Text style={allStyles.protocolTxt}>
+              《用户协议》和《隐私政策》
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -172,10 +172,7 @@ export default function Index() {
           <Image style={styles.icon_arrow} source={icon_arrow} />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.wxLoginButton}
-          activeOpacity={0.7}
-        >
+        <TouchableOpacity style={styles.wxLoginButton} activeOpacity={0.7}>
           <Image style={styles.icon_wx} source={icon_wx_small} />
           <Text style={styles.wxLoginTxt}>微信登陆</Text>
         </TouchableOpacity>
@@ -184,15 +181,15 @@ export default function Index() {
           style={styles.oneKeyLoginButton}
           activeOpacity={0.7}
           onPress={() => {
-            router.push('/(tabs)/home')
+            router.push('/(tabs)/home');
           }}
         >
           <Text style={styles.oneKeyLoginTxt}>一键登陆</Text>
         </TouchableOpacity>
         <Image style={styles.logoMain} source={icon_logo_main} />
       </View>
-    )
-  }
+    );
+  };
   // 手机号输入方式
   const renderInputLogin = () => {
     const styles = StyleSheet.create({
@@ -327,22 +324,20 @@ export default function Index() {
         width: 28,
         height: 28,
       },
-    })
+    });
     return (
       <View style={styles.root}>
         <Text style={styles.pwdLogin}>密码登陆</Text>
-        <Text style={styles.tip}>
-          未注册的手机号登陆成功后将自动注册
-        </Text>
+        <Text style={styles.tip}>未注册的手机号登陆成功后将自动注册</Text>
         <View style={styles.phoneLayout}>
           <Text style={styles.pre86}>+86</Text>
           <Image style={styles.triangle} source={icon_triangle} />
           <TextInput
             style={styles.phoneInput}
             placeholderTextColor="#bbb"
-            placeholder='请输入手机号码'
+            placeholder="请输入手机号码"
             autoFocus={false}
-            keyboardType='number-pad'
+            keyboardType="number-pad"
             maxLength={13}
             value={phone}
             onChangeText={(text: string) => {
@@ -355,9 +350,9 @@ export default function Index() {
           <TextInput
             style={[styles.phoneInput, styles.pwdInput]}
             placeholderTextColor="#bbb"
-            placeholder='输入密码'
+            placeholder="输入密码"
             autoFocus={false}
-            keyboardType='number-pad'
+            keyboardType="number-pad"
             maxLength={6}
             secureTextEntry={!eyeOpen}
             value={pwd}
@@ -367,7 +362,7 @@ export default function Index() {
           />
           <TouchableOpacity
             onPress={() => {
-              setEyeOpen(!eyeOpen)
+              setEyeOpen(!eyeOpen);
             }}
           >
             <Image
@@ -405,10 +400,12 @@ export default function Index() {
           <Text style={allStyles.lableTxt}>我已阅读并同意</Text>
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL('https://www.baidu.com')
+              Linking.openURL('https://www.baidu.com');
             }}
           >
-            <Text style={allStyles.protocolTxt}>《用户协议》和《隐私政策》</Text>
+            <Text style={allStyles.protocolTxt}>
+              《用户协议》和《隐私政策》
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -421,21 +418,19 @@ export default function Index() {
           style={styles.closeButton}
           onPress={() => {
             LayoutAnimation.easeInEaseOut();
-            setLoginType('quick')
+            setLoginType('quick');
           }}
         >
           <Image style={styles.closeImg} source={icon_close_modal} />
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
   return (
     <View style={allStyles.root}>
-      {
-        loginType === 'quick' ? renderQuickLogin() : renderInputLogin()
-      }
+      {loginType === 'quick' ? renderQuickLogin() : renderInputLogin()}
     </View>
-  )
+  );
 }
 
 const allStyles = StyleSheet.create({
