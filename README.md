@@ -27,14 +27,4 @@
 
 ## 效果预览
 
-<img src="./docs/images/img_01.jpg" width="200px">
-<img src="./docs/images/img_02.jpg" width="200px">
-<img src="./docs/images/img_03.jpg" width="200px">
-<img src="./docs/images/img_04.jpg" width="200px">
-<img src="./docs/images/img_05.jpg" width="200px">
-<img src="./docs/images/img_06.jpg" width="200px">
-<img src="./docs/images/img_07.jpg" width="200px">
-<img src="./docs/images/img_08.jpg" width="200px">
-<img src="./docs/images/img_09.jpg" width="200px">
-<img src="./docs/images/img_10.jpg" width="200px">
-<img src="./docs/images/img_11.jpg" width="200px">
+<img src="./docs/images/img_01.jpg" width="200px"><img src="./docs/images/img_02.jpg" width="200px"><img src="./docs/images/img_03.jpg" width="200px"><img src="./docs/images/img_04.jpg" width="200px"><img src="./docs/images/img_05.jpg" width="200px"><img src="./docs/images/img_06.jpg" width="200px"><img src="./docs/images/img_07.jpg" width="200px"><img src="./docs/images/img_08.jpg" width="200px"><img src="./docs/images/img_09.jpg" width="200px"><img src="./docs/images/img_10.jpg" width="200px"><img src="./docs/images/img_11.jpg" width="200px">
