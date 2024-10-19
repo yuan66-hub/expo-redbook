@@ -10,6 +10,7 @@
 - [x] 自定义抽屉组件
 - [ ] 自定义原生Loading组件和Toast组件
 - [ ] 支持操作SqLite数据库
+- [ ] 支持expo-router的权限组件
 
 ## 安装
 
