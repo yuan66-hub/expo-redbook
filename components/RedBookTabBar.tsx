@@ -30,16 +30,23 @@ const styles = StyleSheet.create({
 export default function RedBookTabBar(props: any) {
   const { state, descriptors, navigation } = props;
   const { routes, index } = state;
+  const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   const pickImageAsync = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true, // 是否允许编辑图片
-      quality: 1, // 图片质量
-      mediaTypes: ImagePicker.MediaTypeOptions.Images, // 选取图片类型
-    });
-
-    if (!result.canceled) {
-      console.log(result);
+    const { granted } = status as ImagePicker.MediaLibraryPermissionResponse;
+    if (!granted) {
+      // 获取用户相册权限
+      await requestPermission();
     } else {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true, // 是否允许编辑图片
+        quality: 1, // 图片质量
+        mediaTypes: ImagePicker.MediaTypeOptions.Images, // 选取图片类型
+      });
+
+      if (!result.canceled) {
+        console.log(result);
+      } else {
+      }
     }
   };
   return (
