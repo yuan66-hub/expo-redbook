@@ -33,6 +33,7 @@ import icon_exit from '@/assets/images/sideMenu/icon_exit.png';
 import request from '@/utils/request';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+import { useSession } from '../../app/ctx';
 
 const MENUS = [
     [
@@ -74,7 +75,7 @@ const {width: SCREEN_WIDTH ,height:SCREEN_HEIGHT } = Dimensions.get('screen');
 const ContentWidth = SCREEN_WIDTH * 0.6;
 
 export default forwardRef((props: any, ref) => {
-
+   const { signOut } = useSession()
     const [visible, setVisible] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
     const router = useRouter()
@@ -104,9 +105,7 @@ export default forwardRef((props: any, ref) => {
         switch (item.type) {
             case 'logout':
                 // 退出登录
-                await request.post('api/auth/logout',{})
-                await AsyncStorage.clear()
-                router.replace('/')
+                signOut?.()
                 break;
         
             default:
