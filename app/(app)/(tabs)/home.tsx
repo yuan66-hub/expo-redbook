@@ -35,6 +35,7 @@ export default function Home() {
     if (refreshing || finish) {
       return;
     }
+    setRefreshing(true)
     const { items = [], total = 0 } = (await request.get('api/home/articles', {
       data: {
         page,
@@ -47,6 +48,7 @@ export default function Home() {
     } else {
       setFinish(true);
     }
+    setRefreshing(false)
   };
   // 初始化
   useEffect(() => {

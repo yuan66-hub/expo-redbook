@@ -4,8 +4,16 @@ import {
       StyleSheet
 } from 'react-native'
 import icon_logo_main from '@/assets/images/welcome/icon_main_logo.png';
+import { useEffect } from 'react';
+import { router } from 'expo-router';
 
 export default function Welcome(){
+      useEffect(()=>{
+      //  TODO: 数据预加载
+      setTimeout(()=>{
+            router.push('/(tabs)/home')
+      },3000)
+      },[])
 
       return (
             <View style={styles.root}>

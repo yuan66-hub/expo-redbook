@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 
 import { useRouter } from 'expo-router';
-import request from '@/utils/request';
 import { formatPhone, replaceBlank } from '@/utils/util';
 import icon_logo_main from '@/assets/images/login/icon_main_logo.png';
 import icon_unselected from '@/assets/images/login/icon_unselected.png';
@@ -26,7 +25,7 @@ import icon_exchange from '@/assets/images/login/icon_exchange.png';
 import icon_wx from '@/assets/images/login/icon_wx.png';
 import icon_qq from '@/assets/images/login/icon_qq.webp';
 import icon_close_modal from '@/assets/images/login/icon_close_modal.png';
-import { useSession } from './ctx';
+import { useSession } from '../ctx';
 
 export default function Index() {
   const [loginType, setLoginType] = useState<'quick' | 'input'>('quick');

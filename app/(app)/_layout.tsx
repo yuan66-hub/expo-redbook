@@ -2,7 +2,7 @@ import { Stack,Redirect } from 'expo-router';
 import { useBackHandler } from '@react-native-community/hooks';
 import { useRouter } from 'expo-router';
 import { ToastAndroid,Text } from 'react-native';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import { useSession } from '../ctx';
 
 export const unstable_settings = {
@@ -34,11 +34,11 @@ export default function RootLayout() {
   // Only require authentication within the (app) group's layout as users
   // need to be able to access the (auth) group and sign in again.
   if (!session) {
-    console.log('89898');
+
     
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
-    return <Redirect href={'/sign-in'} />;
+    return <Redirect href={'/'} />;
   }
 
  
@@ -46,6 +46,13 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: false,
+          presentation:'modal' // 独立路由系统之外的页面
+        }}
+      />
       <Stack.Screen
         name="searchGoods"
         options={{

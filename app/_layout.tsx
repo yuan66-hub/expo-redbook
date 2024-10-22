@@ -6,7 +6,7 @@ export default function Root() {
   // Set up the auth context and render our layout inside of it.
   useEffect(() => {
     // This navigation event will trigger the error above.
-    router.push('/(tabs)/home');
+    router.push('/welcome');
   }, []);
   return (
     <SessionProvider>
