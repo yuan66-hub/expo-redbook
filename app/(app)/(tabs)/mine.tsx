@@ -16,11 +16,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import request from '@/utils/request';
 import Provider from '@/components/mine/Provider';
 
+import { useLocalSearchParams  } from 'expo-router'
+
+
+
 export default function Mine() {
   const [bgImgHeight, setBgImgHeight] = useState<number>(400);
   const [userInfo, setUserInfo] = useState<any>({});
   const [info, setInfo] = useState<any>({});
   const [favorateList, setFavorateList] = useState<any>({});
+  const { id } = useLocalSearchParams() // 获取路由参数/Deep Link 传递参数
+  useEffect(()=>{
+    if(id){
+      // TODO: 新增一个页面
+    }
+  },[id])
   // 获取状态栏的高度
   const insets = useSafeAreaInsets();
 
