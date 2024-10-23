@@ -52,7 +52,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       await request.post('api/auth/logout',{})
       await AsyncStorage.clear()
       setSession(null);
-      router.replace('/')
+      router.replace('/sign-in')
   }
   return (
     <AuthContext.Provider

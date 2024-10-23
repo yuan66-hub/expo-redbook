@@ -15,7 +15,7 @@ import { useCallback, useEffect, useState } from 'react';
 import ArticleItem from '@/components/home/ArticleItem';
 import request from '@/utils/request';
 import { DEFAULT_CATEGORY_LIST } from '@/data/category';
-
+import { Modal } from 'react-native-ui-lib'
 export default function Home() {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [articlesList, setData] = useState<ArticleSimple[]>([]);

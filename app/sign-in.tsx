@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   View,
   Image,
@@ -9,9 +9,10 @@ import {
   TextInput,
   LayoutAnimation,
   ToastAndroid,
+
 } from 'react-native';
 
-import { useRouter } from 'expo-router';
+import { useRouter,Stack } from 'expo-router';
 import { formatPhone, replaceBlank } from '@/utils/util';
 import icon_logo_main from '@/assets/images/login/icon_main_logo.png';
 import icon_unselected from '@/assets/images/login/icon_unselected.png';
@@ -25,7 +26,7 @@ import icon_exchange from '@/assets/images/login/icon_exchange.png';
 import icon_wx from '@/assets/images/login/icon_wx.png';
 import icon_qq from '@/assets/images/login/icon_qq.webp';
 import icon_close_modal from '@/assets/images/login/icon_close_modal.png';
-import { useSession } from '../ctx';
+import { useSession } from './ctx';
 
 export default function Index() {
   const [loginType, setLoginType] = useState<'quick' | 'input'>('quick');
@@ -38,8 +39,7 @@ export default function Index() {
   const router = useRouter();
   const { signIn } = useSession()
   // 登录
-  const onLoginPress = async () => {
-    const canLogin = phone?.length === 13 && pwd?.length === 6;
+  const onLoginPress = useCallback(async () => {
     if (!check || !canLogin) {
       ToastAndroid.show(
         '未勾选同意《用户协议》和《隐私政策》',
@@ -49,9 +49,9 @@ export default function Index() {
     }
     if (loading) return;
     setLoading(true);
-    signIn?.(replaceBlank(phone),pwd)
+    await signIn?.(replaceBlank(phone),pwd)
     setLoading(false);
-  };
+  },[loading,phone,pwd,check]);
   useEffect(() => {
     setCanLogin(phone?.length === 13 && pwd?.length === 6);
   }, [phone, pwd]);
@@ -170,7 +170,7 @@ export default function Index() {
           style={styles.oneKeyLoginButton}
           activeOpacity={0.7}
           onPress={() => {
-            router.push('/(tabs)/home');
+            // router.push('/(tabs)/home');
           }}
         >
           <Text style={styles.oneKeyLoginTxt}>一键登陆</Text>
@@ -416,9 +416,12 @@ export default function Index() {
     );
   };
   return (
-    <View style={allStyles.root}>
-      {loginType === 'quick' ? renderQuickLogin() : renderInputLogin()}
-    </View>
+    <>
+      <View style={allStyles.root}>
+        {loginType === 'quick' ? renderQuickLogin() : renderInputLogin()}
+      </View>
+    </>
+
   );
 }
 
@@ -451,3 +454,5 @@ const allStyles = StyleSheet.create({
     color: '#1020ff',
   },
 });
+
+

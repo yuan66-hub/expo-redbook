@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "react-native-app",
-    "slug": "react-native-app",
+    "slug": "redbook",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,14 +13,21 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.reactnativeapp"
+      "package": "com.anonymous.reactnativeapp",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "bundler": "metro",
@@ -39,6 +46,15 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "96d84a6a-8c32-4a01-bc87-339e0f4392e1"
+      }
+    },
+    "owner": "yuanjianming",
+    "updates": {
+      "url": "https://u.expo.dev/96d84a6a-8c32-4a01-bc87-339e0f4392e1"
     }
   }
 }

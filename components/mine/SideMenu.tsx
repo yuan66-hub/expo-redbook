@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle, useCallback } from 'react';
+import React, { useState, forwardRef, useImperativeHandle, useCallback, useEffect } from 'react';
 import {
     View,
     Text,
@@ -30,40 +30,38 @@ import icon_wish from '@/assets/images/sideMenu/icon_wish.png';
 import icon_red_vip from '@/assets/images/sideMenu/icon_red_vip.png'
 import icon_community from '@/assets/images/sideMenu/icon_community.png';
 import icon_exit from '@/assets/images/sideMenu/icon_exit.png';
-import request from '@/utils/request';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useSession } from '../../app/ctx';
-
+import { useUpdates, reloadAsync, checkForUpdateAsync,fetchUpdateAsync } from 'expo-updates'
 const MENUS = [
     [
-        {icon: icon_fid_user, name: '发现好友'},
+        { icon: icon_fid_user, name: '发现好友' },
     ],
     [
-        {icon: icon_draft, name: '我的草稿'},
-        {icon: icon_create_center, name: '创作中心'},
-        {icon: icon_browse_histroy, name: '浏览记录'},
-        {icon: icon_packet, name: '钱包'},
-        {icon: icon_free_net, name: '免流量'},
-        {icon: icon_nice_goods, name: '好物体验'},
+        { icon: icon_draft, name: '我的草稿' },
+        { icon: icon_create_center, name: '创作中心' },
+        { icon: icon_browse_histroy, name: '浏览记录' },
+        { icon: icon_packet, name: '钱包' },
+        { icon: icon_free_net, name: '免流量' },
+        { icon: icon_nice_goods, name: '好物体验' },
     ],
     [
-        {icon: icon_orders, name: '订单'},
-        {icon: icon_shop_car, name: '购物车'},
-        {icon: icon_coupon, name: '卡券'},
-        {icon: icon_wish, name: '心愿单'},
-        {icon: icon_red_vip, name: '小红书会员'},
+        { icon: icon_orders, name: '订单' },
+        { icon: icon_shop_car, name: '购物车' },
+        { icon: icon_coupon, name: '卡券' },
+        { icon: icon_wish, name: '心愿单' },
+        { icon: icon_red_vip, name: '小红书会员' },
     ],
     [
-        {icon: icon_community, name: '社区公约'},
-        {icon: icon_exit, name: '退出登陆',type:'logout' }
+        { icon: icon_community, name: '版本更新', type: 'update' },
+        { icon: icon_exit, name: '退出登陆', type: 'logout' }
     ],
 ];
 
 const BOTTOM_MENUS = [
-    {icon: icon_setting, txt: '设置'},
-    {icon: icon_service, txt: '帮助与客服'},
-    {icon: icon_scan, txt: '扫一扫'},
+    { icon: icon_setting, txt: '设置' },
+    { icon: icon_service, txt: '帮助与客服' },
+    { icon: icon_scan, txt: '扫一扫' },
 ];
 
 export interface SideMenuRef {
@@ -71,14 +69,25 @@ export interface SideMenuRef {
     hide: () => void;
 }
 
-const {width: SCREEN_WIDTH ,height:SCREEN_HEIGHT } = Dimensions.get('screen');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 const ContentWidth = SCREEN_WIDTH * 0.6;
 
 export default forwardRef((props: any, ref) => {
-   const { signOut } = useSession()
+    const { signOut } = useSession()
     const [visible, setVisible] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
     const router = useRouter()
+    const {
+        currentlyRunning, // 判断是否在更新
+        isUpdateAvailable, // 判断是否可以更新
+        isUpdatePending
+    } = useUpdates();
+    useEffect(() => {
+        if (isUpdatePending) {
+            // 下载完成重新加载应用
+            reloadAsync();
+        }
+    }, [isUpdatePending]);
     const show = () => {
         setVisible(true);
         setTimeout(() => {
@@ -107,7 +116,13 @@ export default forwardRef((props: any, ref) => {
                 // 退出登录
                 signOut?.()
                 break;
-        
+            case 'update':
+                // 只能在生产环境运行
+                // 检查更新
+                await checkForUpdateAsync()
+                // 自动下载或者手动下载
+                await fetchUpdateAsync()
+                break;
             default:
                 break;
         }
@@ -115,7 +130,7 @@ export default forwardRef((props: any, ref) => {
 
     const renderContent = () => {
         return (
-            <View style={[styles.content, { marginLeft: open ? 0 : -ContentWidth, height:SCREEN_HEIGHT }]}>
+            <View style={[styles.content, { marginLeft: open ? 0 : -ContentWidth, height: SCREEN_HEIGHT }]}>
                 <ScrollView
                     style={styles.scrollView}
                     contentContainerStyle={styles.container}

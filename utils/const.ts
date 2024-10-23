@@ -1,1 +1,2 @@
-export const HOST = 'http://192.168.4.6:3000';
+export const HOST = process.env.EXPO_PUBLIC_API_URL;
+
