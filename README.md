@@ -9,12 +9,13 @@
 - [x] 自定义下拉弹窗
 - [x] 自定义抽屉组件
 - [x] 支持动态请求系统权限
-- [x] 支持expo-router的权限组件
+- [x] 基于`expo-router`的权限组件
 - [x] 支持云打包和云更新
-- [x] 自定义DeepLink分享二维码跳转Ta人主页
-- [x] 支持Android APP Link/IOS Universal Links
-- [ ] 支持调用安卓设备嵌入大模型API
-- [ ] 聊天记录支持操作SqLite数据库
+- [x] 基于`expo-router`的`DeepLink`分享二维码跳转Ta人主页
+- [x] 支持`Android APP Link`/`IOS Universal Links`
+- [ ] 支持调用安卓设备嵌入大模型`API`
+- [ ] 聊天记录支持操作`SqLite`数据库
+- [ ] 推送系统消息`notifications` 
 
 ## 安装
 
